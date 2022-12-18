@@ -14,16 +14,23 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
 public class Bill {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date billingDate;
+    private Long customerId;
     @OneToMany(mappedBy = "bill")
     private Collection<ProductItem> productItems;
 
-    private Long CustomerID;
     @Transient
     private Customer customer;
+
+    public double getTotale(){
+        double somme=0;
+        for(ProductItem pi: productItems){
+            somme+=pi.getAmount();
+        }
+        return somme;
+    }
 
 }

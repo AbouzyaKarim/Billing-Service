@@ -26,10 +26,10 @@ public class billingRestController {
         this.productItemRestClient = productItemRestClient;
     }
 
-    @GetMapping(path = "/fullBill/{id}")
+    @GetMapping(path = "/bills/fullBill/{id}")
     public Bill getBill(@PathVariable Long id){
         Bill bill = billRepository.findById(id).get();
-        Customer customer= customerRestClient.getCustomerById(bill.getCustomerID());
+        Customer customer= customerRestClient.getCustomerById(bill.getCustomerId());
         bill.setCustomer(customer);
         bill.getProductItems().forEach(pi->{
             Product product=productItemRestClient.getProductById(pi.getProductID());
